@@ -25,6 +25,7 @@
 package com.masterdevskills.cha1.ext1;
 
 
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class LambdaExpression1 {
@@ -37,7 +38,8 @@ public class LambdaExpression1 {
 	 */
 	public static boolean checkMoreThan5Chars(String value) {
 
-		throw new RuntimeException("NotImplementedYet");
+		Predicate<String> pr = s -> s.length() > 5;
+		return pr.test(value);
 	}
 
 	/* TODO 2: Write a lambda expression using Predicate<String> to check if string is empty or not
@@ -45,7 +47,8 @@ public class LambdaExpression1 {
 	 * @see Predicate<String>
 	 */
 	public static boolean isStringEmpty(String value) {
-		throw new RuntimeException("NotImplementedYet");
+		Predicate<String> pr = s -> s.isBlank();
+		return pr.test(value);
 	}
 
 	/**
@@ -55,6 +58,7 @@ public class LambdaExpression1 {
 	 * @see Predicate<String>
 	 */
 	public static String convertToUpperCase(String text) {
-		throw new RuntimeException("NotImplementedYet");
+		Function<String, String> fn = s -> s.toUpperCase();
+		return fn.apply(text);
 	}
 }
