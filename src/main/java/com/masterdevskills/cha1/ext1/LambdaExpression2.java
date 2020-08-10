@@ -22,6 +22,8 @@
 
 package com.masterdevskills.cha1.ext1;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * @author A N M Bazlur Rahman @bazlur_rahman
  * @since 04 August 2020
@@ -37,11 +39,22 @@ public class LambdaExpression2 {
 	 */
 	public void executionTime() {
 		//TODO add your code here;
+		Executable excc = () -> System.out.println("" + currentTimeMillis());
+		excc.execute();
+
 	}
 
 	/* TODO: use the above of method here
 	 */
 	public void run() {
 		//executionTime();
+		executionTime();
 	}
+
 }
+
+@FunctionalInterface
+interface Executable{
+	void execute();
+}
+
