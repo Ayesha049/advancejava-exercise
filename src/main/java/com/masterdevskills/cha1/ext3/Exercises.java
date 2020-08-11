@@ -23,7 +23,11 @@
 package com.masterdevskills.cha1.ext3;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 /**
@@ -41,7 +45,12 @@ public class Exercises {
 	 * @see List#replaceAll(UnaryOperator)
 	 */
 	public static List<Integer> doubling(List<Integer> ints) {
-		throw new RuntimeException("NotYetImplemented");
+		UnaryOperator<Integer> un = x -> x*2;
+		List<Integer> ans = new ArrayList<>();
+		for(int i = 0; i<ints.size();i++) {
+			ans.add(un.apply(ints.get(i)));
+		}
+		return ans;
 	}
 
 	/**
@@ -52,7 +61,12 @@ public class Exercises {
 	 * @see List#replaceAll(UnaryOperator)
 	 */
 	public static List<String> addSuffix(List<String> items, String suffix) {
-		throw new RuntimeException("NotYetImplemented");
+		List<String> ans = new ArrayList<>();
+		BiFunction<String,String,String> bi = (str, suff) -> str+suff;
+		for(int i = 0; i<items.size();i++) {
+			ans.add(bi.apply(items.get(i),suffix));
+		}
+		return ans;
 	}
 
 	/***
@@ -61,7 +75,8 @@ public class Exercises {
 	 * @param people list of person
 	 * */
 	public static List<Person> sortItemByFirstNameOrderAscending(List<Person> people) {
-		throw new RuntimeException("NotYetImplemented");
+		Collections.sort(people, (p1,p2) -> p1.getFirstName().compareTo(p2.getFirstName()));
+		return people;
 	}
 
 	/**
@@ -70,7 +85,8 @@ public class Exercises {
 	 * @param people list of person
 	 */
 	public static List<Person> sortByLastNameOrderDescending(List<Person> people) {
-		throw new RuntimeException("NotYetImplemented");
+		Collections.sort(people, (p1,p2) -> p2.getLastName().compareTo(p1.getLastName()));
+		return people;
 	}
 
 	/**
@@ -81,6 +97,13 @@ public class Exercises {
 	 * @param people list of person
 	 */
 	public static List<Person> sortByFirstNameAndThenLastNameAndThenAge(List<Person> people) {
-		throw new RuntimeException("NotYetImplemented");
+		Collections.sort(people, (p1,p2) -> {
+			if(p1.getFirstName().compareTo(p2.getFirstName()) == 0) {
+				if(p1.getLastName().compareTo(p2.getLastName()) == 0) {
+					return p1.getAge() - p2.getAge();
+				} else return p1.getLastName().compareTo(p2.getLastName());
+			} else return p1.getFirstName().compareTo(p2.getFirstName());
+		});
+		return people;
 	}
 }
