@@ -22,8 +22,18 @@
 
 package com.masterdevskills.cha1.ext1;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * TODO : Write a file processor that would read text from a text file.
@@ -45,8 +55,20 @@ public class FileProcessor {
      * @see List#removeIf(Predicate)
      */
     public List<String> readFileFrom(String fileName) {
-
-        throw new RuntimeException("Not Yet Implemented");
+        List<String> lst = new ArrayList<>();
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            String line = reader.readLine();
+            while (line!= null) {
+                if(line.length() > 0) lst.add(line);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lst;
     }
 
     /**
@@ -59,8 +81,17 @@ public class FileProcessor {
      * @see String#join(CharSequence, CharSequence...)
      */
     public void writeToFile(List<String> lines, String fileName) {
+        FileWriter w = null;
+        try {
+            w = new FileWriter(fileName);
+            for(String s : lines) {
+                w.write(s+'\n');
+            }
+            w.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        throw new RuntimeException("Not Yet Implemented");
     }
 }
 
