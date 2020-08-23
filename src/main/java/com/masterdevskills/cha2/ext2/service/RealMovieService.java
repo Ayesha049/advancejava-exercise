@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -60,9 +61,13 @@ public class RealMovieService {
 	 * @see java.util.stream.Stream#filter(Predicate)
 	 * @see java.util.stream.Stream#collect(Collector)
 	 */
+	//passed test
 	public List<Movie> findAllMoviesInYear(int year) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> Integer.parseInt(m.getYear()) == year)
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -73,10 +78,13 @@ public class RealMovieService {
 	 * @see java.util.stream.Stream#filter(Predicate)
 	 * @see java.util.stream.Stream#collect(Collector)
 	 */
-
+	//passed test
 	public List<Movie> findAllMovieRated(String rated) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getRated().equals(rated) )
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -90,7 +98,10 @@ public class RealMovieService {
 
 	public long countMoviesWithRated(String rated) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getRated().equals(rated))
+				.count();
 	}
 
 	/**
@@ -101,9 +112,13 @@ public class RealMovieService {
 	 * @see java.util.stream.Stream#filter(Predicate)
 	 * @see java.util.stream.Stream#collect(Collector)
 	 */
+	//passed test
 	public List<Movie> findMoviesWithImdbRatingEqualAndGreaterThan(double rating) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getImdbRating() >= rating)
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -114,9 +129,13 @@ public class RealMovieService {
 	 * @see java.util.stream.Stream#filter(Predicate)
 	 * @see java.util.stream.Stream#collect(Collector)
 	 */
+	//passed test
 	public List<Movie> findMoviesOfDirector(String director) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getDirector().equals(director))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -125,9 +144,14 @@ public class RealMovieService {
 	 * @param rated given rating
 	 * @return list of Movie Title of those movies whose rating is equal to given rating
 	 */
+	//test passed
 	public List<String> listMovieTitleRated(String rated) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getRated().equals(rated))
+				.map(m -> m.getTitle())
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -139,9 +163,15 @@ public class RealMovieService {
 	 * @see java.util.stream.Stream#collect(Collector)
 	 * @see Stream#distinct()
 	 */
+	//test passed
 	public List<String> listUniqueMovieTitleRated(String rated) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getRated().equals(rated))
+				.map(m -> m.getTitle())
+				.distinct()
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -151,9 +181,14 @@ public class RealMovieService {
 	 * @return movie title of any movie whose rating is equal or greater than given rating
 	 * @see Stream#findAny()
 	 */
+	//did not passed
 	public Optional<String> findAnyMovieTitleWithImdbRatingEqualOrGreater(double rating) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getImdbRating() >= rating)
+				.map(m -> m.getTitle())
+				.findAny();
 	}
 
 	/**
@@ -164,9 +199,14 @@ public class RealMovieService {
 	 * @see Stream#findFirst()
 	 * @see Stream#map(Function)
 	 */
+	//did not passed
 	public Optional<String> findFirstMovieTitleWithImdbRatingEqualOrGreater(double rating) {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.filter( m -> m.getImdbRating() >= rating)
+				.map(m -> m.getTitle())
+				.findFirst();
 	}
 
 	/**
@@ -175,8 +215,12 @@ public class RealMovieService {
 	 * @return the sorted list
 	 * @see Stream#sorted(Comparator)
 	 */
+	//test passed
 	public List<Movie> sortMovieByTitle() {
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.sorted((a,b) -> a.getTitle().compareTo(b.getTitle()))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -186,9 +230,13 @@ public class RealMovieService {
 	 * @see Stream#sorted(Comparator)
 	 * @see Comparator#thenComparing(Function)
 	 */
+	//test passed
 	public List<Movie> sortByImdbRatingAndThenTitle() {
 
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.sorted(Comparator.comparing(Movie::getImdbRating).thenComparing(Movie::getTitle))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -197,9 +245,11 @@ public class RealMovieService {
 	 * @return movie with maximum rating
 	 * @see Stream#max(Comparator)
 	 */
-
+	//test passed
 	public Optional<Movie> findTopRatedMovie() {
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.max(Comparator.comparing(Movie::getImdbRating));
 	}
 
 	/**
@@ -207,9 +257,11 @@ public class RealMovieService {
 	 *
 	 * @return movie with minimum rating
 	 */
-
+	//test passed
 	public Optional<Movie> findMinRatedMovie() {
-		throw new RuntimeException("TODO://ImplementIt");
+		var allMovies = InMemoryMovieService.getInstance().findAllMovies();
+		return allMovies.stream()
+				.min(Comparator.comparing(Movie::getImdbRating));
 	}
 
 	/**
